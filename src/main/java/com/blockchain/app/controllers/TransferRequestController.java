@@ -10,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.math.BigDecimal;
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -37,5 +38,19 @@ public class TransferRequestController {
     @GetMapping("/to-pay")
     public ResponseEntity<List<TransferRequest>> getRequestToPay() {
         return ResponseEntity.ok(transferRequestService.getRequestToPay());
+    }
+
+    @GetMapping("/request-date")
+    public ResponseEntity<List<TransferRequest>> getRequestByDate(
+            @RequestParam Date requestDate
+    ) {
+        return ResponseEntity.ok(transferRequestService.getByRequestDate(requestDate));
+    }
+
+    @GetMapping("/receiving-address")
+    public ResponseEntity<List<TransferRequest>> getRequestByReceivingAddress(
+            @RequestParam String receivingAddress
+    ) {
+        return ResponseEntity.ok(transferRequestService.getByReceivingAddress(receivingAddress));
     }
 }

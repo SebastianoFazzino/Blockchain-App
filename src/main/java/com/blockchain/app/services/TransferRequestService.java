@@ -57,10 +57,27 @@ public class TransferRequestService {
         return this.save(transferRequest);
     }
 
+    /**
+     * Create a new TransferRequest
+     * @param requests List
+     * @return TransferRequest
+     */
+    public List<TransferRequest> bulkCreateTransferRequests(List<TransferRequest> requests) {
+
+        log.info("Creating {} new TransferRequests", requests.size());
+
+        return requests
+                .stream().map(transferRequest ->
+                        this.createNewTransferRequest(
+                                transferRequest.getCurrency(),
+                                transferRequest.getAmount(),
+                                transferRequest.getReceivingAddress())
+                ).toList();
+    }
 
     /**
      * Get TransferRequests to pay
-     * @return List<TransferRequest>
+     * @return List
      */
     public List<TransferRequest> getRequestToPay() {
 
@@ -72,7 +89,7 @@ public class TransferRequestService {
     /**
      * Get TransferRequests by receiving address
      * @param receivingAddress String
-     * @return List<TransferRequest>
+     * @return List
      */
     public List<TransferRequest> getByReceivingAddress(String receivingAddress) {
 
@@ -84,7 +101,7 @@ public class TransferRequestService {
     /**
      * Get TransferRequests by request date
      * @param requestDate Date
-     * @return List<TransferRequest>
+     * @return List
      */
     public List<TransferRequest> getByRequestDate(Date requestDate) {
 
