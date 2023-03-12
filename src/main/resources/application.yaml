@@ -1,0 +1,42 @@
+server:
+  port: 8495
+
+spring:
+  application:
+    name: blockchain-app
+
+  jackson:
+    mapper:
+      ACCEPT_CASE_INSENSITIVE_ENUMS: true
+
+  profiles:
+    active: "prod"
+
+  datasource:
+    url: jdbc:mysql://${DATABASE_URL}?user=${DATABASE_USER}&password=${DATABASE_PASSWORD}&createDatabaseIfNotExist=true
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+      org:
+        hibernate:
+          envers:
+            audit_table_suffix: _AUDIT
+            revision_field_name: REVISION_ID
+            revision_type_field_name: REVISION_TYPE
+    open-in-view: true
+
+  mvc:
+    format:
+      date: yyyy-MM-dd
+      date-time: yyyy-MM-dd HH:mm:ss
+      time: HH:mm:ss
+
+  config:
+    import: optional:file:.env[.properties]
